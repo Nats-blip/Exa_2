@@ -1,0 +1,10 @@
+*.pyc
+./tmp
+./build/*
+.idea
+env
+venv
+*.sublime*
+
+__pycache__/
+.env
