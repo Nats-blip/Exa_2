@@ -5,6 +5,7 @@ from . import appbuilder, db
 from flask import render_template
 from flask_appbuilder import BaseView, expose
 from sqlalchemy import func
+from datetime import date
 
 class ClienteView(ModelView):
     datamodel = SQLAInterface(Cliente)
@@ -34,6 +35,7 @@ class TecnicoView(ModelView):
 class OrdenServicioView(ModelView):
     datamodel = SQLAInterface(OrdenServicio)
 
+
     list_columns = [
         "fecha",
         "estado",
@@ -42,6 +44,45 @@ class OrdenServicioView(ModelView):
         "servicio",
         "tecnico"
     ]
+
+    add_columns = [
+    "cliente",
+    "servicio",
+    "tecnico",
+    "fecha",
+    "estado",
+    "costo"
+]
+
+    edit_columns = [
+    "cliente",
+    "servicio",
+    "tecnico",
+    "fecha",
+    "estado",
+    "costo"
+]
+
+    def pre_add(self, item):
+
+        if item.servicio:
+            item.costo = item.servicio.precio
+
+        if item.fecha and item.fecha >= date.today():
+            item.estado = "Activo"
+        else:
+            item.estado = "Inactivo"
+
+    def pre_update(self, item):
+
+        if item.servicio:
+            item.costo = item.servicio.precio
+
+        if item.fecha and item.fecha >= date.today():
+            item.estado = "Activo"
+        else:
+            item.estado = "Inactivo"
+
 appbuilder.add_view(
     ClienteView,
     "Clientes",
@@ -62,13 +103,14 @@ appbuilder.add_view(
     icon="fa-wrench",
     category="Gestión"
 )
-
+    
 appbuilder.add_view(
-    OrdenServicioView,
+   OrdenServicioView,
     "Órdenes",
     icon="fa-clipboard",
     category="Gestión"
 )
+
 class DashboardView(BaseView):
 
     default_view = "index"

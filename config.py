@@ -12,8 +12,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 SECRET_KEY = "mi_clave_s_1234567890"
 
 # The SQLAlchemy connection string.
-SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "app.db")
-SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@localhost/serviciosapp"
+
+# SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, "app.db")
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@localhost:3307/serviciosapp"
 # SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
 # SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
 
