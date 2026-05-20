@@ -13,5 +13,5 @@ def create_app() -> Flask:
         db.create_all()
         appbuilder.init_app(app, db.session)
         from . import views
-        
+          
     return app
