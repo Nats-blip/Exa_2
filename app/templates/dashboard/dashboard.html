@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<<<<<<< Updated upstream
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,166 +10,815 @@
     <title>Dashboard</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+=======
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+>>>>>>> Stashed changes
 
-    <style>
-        body{
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-        }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-        h1{
-            text-align: center;
-            padding: 20px;
-        }
+<style>
 
-        .top-bar{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
+/* =========================
+   GLOBAL
+========================= */
 
-        .back-btn{
-            background: #ff4d4d;
-            border: none;
-            padding: 10px 15px;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
-        }
+body{
+    background:#0b1120 !important;
+}
 
-        .back-btn:hover{
-            background: #cc0000;
-            transform: scale(1.05);
-        }
+.dashboard-wrapper{
+    padding:30px;
+    min-height:100vh;
 
-        .container{
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    background:
+    radial-gradient(circle at top left,
+    rgba(0,255,204,.12),
+    transparent 30%),
 
-        .card{
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px;
-            width: 250px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transition: 0.3s;
-        }
+    radial-gradient(circle at bottom right,
+    rgba(0,191,255,.12),
+    transparent 30%),
 
-        .card:hover{
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.5);
-        }
+    linear-gradient(
+    135deg,
+    #0b1120,
+    #111827
+    );
+}
 
-        .card h2{
-            font-size: 18px;
-            color: #ddd;
-        }
+/* =========================
+   HEADER
+========================= */
 
-        .card h3{
-            font-size: 28px;
-            margin-top: 10px;
-            color: #00ffcc;
-        }
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:20px;
+}
 
-        .chart-container{
-            width: 80%;
-            margin: 40px auto;
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
+.dashboard-title h1{
+    color:white;
+    font-size:38px;
+    font-weight:700;
+    margin:0;
+}
 
-        canvas{
-            animation: fadeIn 1s ease-in-out;
-        }
+.dashboard-title p{
+    color:#94a3b8;
+    margin-top:8px;
+}
 
-        @keyframes fadeIn{
-            from{opacity:0; transform: translateY(20px);}
-            to{opacity:1; transform: translateY(0);}
-        }
-    </style>
-</head>
-<body>
+.dashboard-btn{
+    background:linear-gradient(135deg,#00bfff,#00ffcc);
+    border:none;
+    padding:14px 24px;
+    border-radius:16px;
+    font-weight:700;
+    color:#0b1120;
+    transition:.3s;
+}
 
-    <h1>📊 Dashboard de Reportes</h1>
+.dashboard-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,255,204,.25);
+}
 
-    <div class="container">
-        <div class="card">
-            <h2>Total Clientes</h2>
-            <h3>{{ total_clientes }}</h3>
+/* =========================
+   KPI
+========================= */
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.kpi-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    padding:25px;
+    backdrop-filter:blur(18px);
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.kpi-card:hover{
+    transform:translateY(-8px);
+    border-color:#00ffcc;
+    box-shadow:0 15px 30px rgba(0,0,0,.3);
+}
+
+.kpi-icon{
+    width:65px;
+    height:65px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    color:white;
+    margin-bottom:18px;
+}
+
+.bg-blue{
+    background:linear-gradient(135deg,#2563eb,#38bdf8);
+}
+
+.bg-green{
+    background:linear-gradient(135deg,#16a34a,#00ffcc);
+}
+
+.bg-orange{
+    background:linear-gradient(135deg,#ea580c,#facc15);
+}
+
+.bg-pink{
+    background:linear-gradient(135deg,#ec4899,#8b5cf6);
+}
+
+.kpi-title{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.kpi-value{
+    color:white;
+    font-size:34px;
+    font-weight:700;
+    margin-top:8px;
+}
+
+.kpi-sub{
+    color:#64748b;
+    margin-top:8px;
+    font-size:13px;
+}
+
+/* =========================
+   CHARTS
+========================= */
+
+.chart-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    margin-bottom:35px;
+}
+
+.analytics-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+    margin-top:35px;
+}
+
+.chart-card{
+    background:rgba(255,255,255,.05);
+    border-radius:24px;
+    padding:25px;
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+}
+
+.large-card{
+    min-height:420px;
+}
+
+.chart-title{
+    color:white;
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* =========================
+   IA PANEL
+========================= */
+
+.ai-panel{
+    background:linear-gradient(
+    135deg,
+    rgba(0,255,204,.08),
+    rgba(0,191,255,.08)
+    );
+
+    border:1px solid rgba(0,255,204,.18);
+
+    border-radius:26px;
+    padding:30px;
+    margin-top:35px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.ai-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.ai-header i{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#00bfff,#00ffcc);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#0b1120;
+    font-size:28px;
+}
+
+.ai-header h2{
+    color:white;
+    margin:0;
+}
+
+.ai-content{
+    background:rgba(0,0,0,.25);
+    padding:25px;
+    border-radius:18px;
+    color:#dbeafe;
+    line-height:1.8;
+}
+
+/* =========================
+   PREDICCION
+========================= */
+
+.prediction-box{
+    margin-top:35px;
+    background:rgba(255,255,255,.05);
+    border-radius:24px;
+    padding:30px;
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.prediction-header{
+    color:white;
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.prediction-body{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.prediction-item{
+    background:rgba(255,255,255,.04);
+    padding:20px;
+    border-radius:18px;
+}
+
+.prediction-item span{
+    color:#94a3b8;
+}
+
+.prediction-item h2,
+.prediction-item h3{
+    color:white;
+    margin-top:10px;
+}
+
+.demand-badge{
+    margin-top:15px;
+    padding:10px 18px;
+    border-radius:12px;
+    display:inline-block;
+    font-weight:700;
+}
+
+.high{
+    background:#16a34a;
+    color:white;
+}
+
+.medium{
+    background:#facc15;
+    color:black;
+}
+
+.low{
+    background:#ef4444;
+    color:white;
+}
+
+.prediction-recommendation{
+    grid-column:1/-1;
+    background:rgba(0,0,0,.25);
+    padding:20px;
+    border-radius:18px;
+    color:#dbeafe;
+}
+
+/* =========================
+   PREDICTIONS
+========================= */
+
+.prediction-section{
+    margin-top:35px;
+}
+
+.prediction-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+}
+
+.prediction-card{
+    background:rgba(255,255,255,.05);
+    padding:25px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.08);
+    transition:.3s;
+}
+
+.prediction-card:hover{
+    transform:translateY(-6px);
+}
+
+.prediction-icon{
+    font-size:40px;
+    margin-bottom:18px;
+}
+
+.prediction-content{
+    color:#dbeafe;
+    line-height:1.7;
+}
+
+/* =========================
+   RECOMMENDATIONS
+========================= */
+
+.recommend-section{
+    margin-top:35px;
+}
+
+.section-title{
+    color:white;
+    margin-bottom:25px;
+}
+
+.recommend-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.recommend-card{
+    background:rgba(255,255,255,.05);
+    border-radius:24px;
+    padding:25px;
+    border:1px solid rgba(255,255,255,.08);
+    transition:.3s;
+}
+
+.recommend-card:hover{
+    transform:translateY(-6px);
+}
+
+.recommend-icon{
+    font-size:40px;
+    margin-bottom:15px;
+}
+
+.recommend-card p{
+    color:#dbeafe;
+    line-height:1.7;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .chart-grid{
+        grid-template-columns:1fr;
+    }
+
+    .analytics-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+<div class="dashboard-wrapper">
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div class="dashboard-title">
+            <h1>📊 Dashboard Inteligente</h1>
+
+            <p>
+                Sistema avanzado de análisis y monitoreo técnico
+            </p>
         </div>
 
-        <div class="card">
-            <h2>Total Órdenes</h2>
-            <h3>{{ total_ordenes }}</h3>
-        </div>
+        <button class="dashboard-btn">
+            <i class="fa-solid fa-chart-line"></i>
+            Reporte IA
+        </button>
 
-        <div class="card">
-            <h2>Ingresos Totales</h2>
-            <h3>Bs {{ ingresos }}</h3>
-        </div>
     </div>
 
-    <div class="chart-container">
-        <h2 style="text-align:center;">Servicios Más Solicitados</h2>
-        <canvas id="grafica"></canvas>
+    <!-- KPI -->
+
+    <div class="kpi-grid">
+
+        <div class="kpi-card">
+            <div class="kpi-icon bg-blue">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="kpi-title">Clientes</div>
+
+            <div class="kpi-value">
+                {{ total_clientes }}
+            </div>
+
+            <div class="kpi-sub">
+                Clientes registrados
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon bg-green">
+                <i class="fa-solid fa-file-invoice"></i>
+            </div>
+
+            <div class="kpi-title">Órdenes</div>
+
+            <div class="kpi-value">
+                {{ total_ordenes }}
+            </div>
+
+            <div class="kpi-sub">
+                Órdenes realizadas
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon bg-orange">
+                <i class="fa-solid fa-coins"></i>
+            </div>
+
+            <div class="kpi-title">Ingresos</div>
+
+            <div class="kpi-value">
+                Bs {{ ingresos }}
+            </div>
+
+            <div class="kpi-sub">
+                Ganancias totales
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon bg-pink">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+
+            <div class="kpi-title">Servicio Top</div>
+
+            <div class="kpi-value">
+                {{ servicio_top[0] }}
+            </div>
+
+            <div class="kpi-sub">
+                Más solicitado
+            </div>
+        </div>
+
     </div>
 
-    <script>
-        const ctx = document.getElementById('grafica');
+    <!-- CHARTS -->
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {{ labels | tojson }},
-                datasets: [{
-                    label: 'Cantidad de servicios',
-                    data: {{ valores | tojson }},
-                    backgroundColor: [
-                        '#00ffcc',
-                        '#ff4d4d',
-                        '#ffd700',
-                        '#00bfff',
-                        '#ff69b4'
-                    ],
-                    borderRadius: 8,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive:true,
-                plugins:{
-                    legend:{
-                        labels:{
-                            color: 'white'
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks:{ color:'white' }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks:{ color:'white' }
-                    }
-                }
-            }
-        });
-    </script>
+    <div class="chart-grid">
 
-</body>
-</html>
+        <div class="chart-card">
+
+            <div class="chart-title">
+                <i class="fa-solid fa-chart-column"></i>
+                Servicios Más Solicitados
+            </div>
+
+            <canvas id="grafica"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                <i class="fa-solid fa-user-gear"></i>
+                Técnico Más Activo
+            </div>
+
+            <div style="
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            height:300px;
+            ">
+
+                <i class="fa-solid fa-user-gear"
+                style="
+                font-size:70px;
+                color:#00ffcc;
+                margin-bottom:20px;
+                "></i>
+
+                <h2 style="color:white;">
+                    {{ tecnico_top[0] }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ANALYTICS -->
+
+    <div class="analytics-grid">
+
+        <div class="chart-card large-card">
+
+            <div class="chart-title">
+                <i class="fa-solid fa-chart-line"></i>
+                Tendencia Mensual
+            </div>
+
+            <canvas id="graficaMes"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                <i class="fa-solid fa-users"></i>
+                Clientes Frecuentes
+            </div>
+
+            <canvas id="clientesChart"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <div class="chart-title">
+                <i class="fa-solid fa-user-gear"></i>
+                Técnicos Más Activos
+            </div>
+
+            <canvas id="tecnicosChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- IA -->
+
+    <div class="ai-panel">
+
+        <div class="ai-header">
+
+            <i class="fa-solid fa-robot"></i>
+
+            <div>
+                <h2>Análisis Inteligente IA</h2>
+
+                <p style="color:#94a3b8;">
+                    Recomendaciones generadas automáticamente
+                </p>
+            </div>
+
+        </div>
+
+        <div class="ai-content">
+
+            {% if analisis_venta %}
+                {{ analisis_venta | safe }}
+            {% else %}
+                No se pudo generar el análisis.
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- PREDICCION -->
+
+    <div class="prediction-box">
+
+        <div class="prediction-header">
+            🔮 Predicción Inteligente
+        </div>
+
+        <div class="prediction-body">
+
+            <div class="prediction-item">
+
+                <span>Servicio futuro más solicitado</span>
+
+                <h2>
+                    {{ servicio_prediccion }}
+                </h2>
+
+            </div>
+
+            <div class="prediction-item">
+
+                <span>Cantidad estimada</span>
+
+                <h3>
+                    {{ cantidad_prediccion }}
+                </h3>
+
+            </div>
+
+            <div class="prediction-item">
+
+                <span>Nivel de demanda</span>
+
+                <div class="
+                demand-badge
+                {% if nivel_demanda == 'ALTA' %}
+                    high
+                {% elif nivel_demanda == 'MEDIA' %}
+                    medium
+                {% else %}
+                    low
+                {% endif %}
+                ">
+                    {{ nivel_demanda }}
+                </div>
+
+            </div>
+
+            <div class="prediction-recommendation">
+                {{ recomendacion_prediccion }}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PREDICCIONES -->
+
+    <div class="prediction-section">
+
+        <div class="prediction-grid">
+
+            {% for prediccion in predicciones %}
+
+            <div class="prediction-card">
+
+                <div class="prediction-icon">
+                    🤖
+                </div>
+
+                <div class="prediction-content">
+                    {{ prediccion }}
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- RECOMMEND -->
+
+    <div class="recommend-section">
+
+        <h1 class="section-title">
+            💡 Recomendaciones Inteligentes
+        </h1>
+
+        <div class="recommend-grid">
+
+            {% for recomendacion in recomendaciones_ia %}
+
+            <div class="recommend-card">
+
+                <div class="recommend-icon">
+                    🚀
+                </div>
+
+                <p>
+                    {{ recomendacion }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const ctx = document.getElementById('grafica');
+
+new Chart(ctx,{
+    type:'bar',
+    data:{
+        labels: {{ labels | tojson }},
+        datasets:[{
+            label:'Servicios',
+            data: {{ valores | tojson }},
+            backgroundColor:[
+                '#00ffcc',
+                '#00bfff',
+                '#ff4d4d',
+                '#ffd700',
+                '#8b5cf6'
+            ],
+            borderRadius:12
+        }]
+    }
+});
+
+const ctxMes = document.getElementById('graficaMes');
+
+new Chart(ctxMes,{
+    type:'line',
+    data:{
+        labels: {{ meses | tojson }},
+        datasets:[{
+            label:'Órdenes',
+            data: {{ totales_mes | tojson }},
+            borderColor:'#00ffcc',
+            backgroundColor:'rgba(0,255,204,.15)',
+            fill:true,
+            tension:.4
+        }]
+    }
+});
+
+const clientesCtx = document.getElementById('clientesChart');
+
+new Chart(clientesCtx,{
+    type:'doughnut',
+    data:{
+        labels: {{ clientes_labels | tojson }},
+        datasets:[{
+            data: {{ clientes_valores | tojson }},
+            backgroundColor:[
+                '#00ffcc',
+                '#00bfff',
+                '#ff4d4d',
+                '#ffd700',
+                '#8b5cf6'
+            ]
+        }]
+    }
+});
+
+const tecnicosCtx = document.getElementById('tecnicosChart');
+
+new Chart(tecnicosCtx,{
+    type:'bar',
+    data:{
+        labels: {{ tecnicos_labels | tojson }},
+        datasets:[{
+            label:'Órdenes',
+            data: {{ tecnicos_valores | tojson }},
+            backgroundColor:'#00ffcc',
+            borderRadius:12
+        }]
+    }
+});
+
+</script>
 
 {% endblock %}
