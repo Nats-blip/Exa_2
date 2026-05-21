@@ -1,0 +1,35 @@
+{% extends "appbuilder/base.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+<div class="login-page">
+
+    <div class="login-overlay"></div>
+
+    <div class="login-box-cinematic">
+
+        <div class="login-brand">
+
+            <h1>
+                ⚡ ServiTech AI
+            </h1>
+
+            <p>
+                Sistema Inteligente de Gestión Técnica
+            </p>
+
+        </div>
+
+        <div class="login-form-container">
+
+            {% include "appbuilder/general/security/login_db.html" %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
